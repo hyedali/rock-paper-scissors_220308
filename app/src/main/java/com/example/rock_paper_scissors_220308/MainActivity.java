@@ -16,12 +16,14 @@ import org.w3c.dom.Text;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int REQUEST_CODE = 101;
+    public static final int RESULT_OK = 101;
 
     int winScore = 0, drawScore = 0, loseScore = 0;
     int totalScore = 0; //총 점수
 
     int randNum;
+
+    String name;
 
     Random random = new Random();
 
@@ -30,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-        //startActivityForResult(intent, REQUEST_CODE);
-
+        EditText user_id = findViewById(R.id.user);
         TextView computer_s = findViewById(R.id.computer);
         TextView player_s = findViewById(R.id.player);
         TextView result_s = findViewById(R.id.result);
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         TextView lose_s = findViewById(R.id.loseScore);
         TextView draw_s = findViewById(R.id.drawScore);
 
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        user_id.setText(name);
 
         Button scissorsBtn = findViewById(R.id.scissors);
         scissorsBtn.setOnClickListener(new View.OnClickListener() {
@@ -135,16 +138,4 @@ public class MainActivity extends AppCompatActivity {
         return result_print;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        EditText user_id = findViewById(R.id.user);
-
-        if(resultCode == RESULT_OK){
-            String name = data.getStringExtra("name");
-            //Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
-            user_id.setText(name);
-        }
-    }
 }
