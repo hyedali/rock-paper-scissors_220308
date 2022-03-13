@@ -3,7 +3,9 @@ package com.example.rock_paper_scissors_220308;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,8 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static final int RESULT_OK = 101;
+    public static final int REQUEST_CODE_SCORE = 102;
+    public static String KEY_SIMPLE_DATA = "data";
 
     int winScore = 0, drawScore = 0, loseScore = 0;
     int totalScore = 0; //총 점수
@@ -100,6 +104,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(), ScorePage.class);
+                DataSave data = new DataSave(Integer.parseInt(score_s.getText().toString()),user_id.getText().toString());
+                intent1.putExtra(KEY_SIMPLE_DATA, data);
+                startActivityForResult(intent1, REQUEST_CODE_SCORE);
+            }
+        });
+
     }
 
     public String rand_print(int num){
@@ -137,5 +151,4 @@ public class MainActivity extends AppCompatActivity {
 
         return result_print;
     }
-
 }
